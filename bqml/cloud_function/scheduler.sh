@@ -1,4 +1,4 @@
-#!/bin/bash
+/bin/bash
 
 ###########################################################################
 #
@@ -17,6 +17,14 @@
 #  limitations under the License.
 #
 ###########################################################################
+#
+# Instructions -
+# 1. Edit the following params in the Cloud Functions UI. Don't insert spaces between param and value.
+#    a. JOBNAME: Any name you like, e.g. "schedule_model_upload"
+#    b. SCHEDULE: Specify the schedule in a cron-tab format e.g. "45 23 * * *" to run job every day at 11:45 pm
+#    c. TIMEZONE: Specify timezone e.g. "EST", "PST", "CST" etc. for US time zones
+#    d. FUNCTION_URL: The URL can be found within the 'Cloud Function > Trigger' It has the format "https://<PROJECT_ID>.cloudfunctions.net/<FUNCTION_NAME>"
+#    e. SERVICE_ACCOUNT_EMAIL: Service account email of the form "<SERVICE_ACCOUNT_NAME>@<PROJECT_ID>.iam.gserviceaccount.com"
 
 
 JOBNAME=""
@@ -24,4 +32,5 @@ SCHEDULE=""
 TIMEZONE=""
 FUNCTION_URL=""
 SERVICE_ACCOUNT_EMAIL=""
-gcloud alpha scheduler jobs create http $JOB_NAME  --schedule=$SCHDULE --uri=$FUNCTION_URL --time-zone=$TIMEZONE --oidc-service-account-email=$SERVICE_ACCOUNT_EMAIL
+gcloud alpha scheduler jobs create http $JOB_NAME  --schedule="$SCHEDULE" --uri=$FUNCTION_URL --time-zone=$TIMEZONE --oidc-service-account-email=$SERVICE_ACCOUNT_EMAIL
+

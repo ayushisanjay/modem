@@ -16,52 +16,26 @@ MoDeM hopes to provide the **last-mile engineering infrastructure** that enables
 ## Prerequisites
 1. **Create service account key:** In the Cloud Console, ***IAM & Admin > Service Accounts > Create Service Account***. Fill out the necessary details, such as service account name, service account email, **permissions (BigQuery Job User)**, creating & downloading the key file. Please store the service account email & service key file safely. 
 2. **Add the service account email as a user to Google Analytics:** Using the service account email generated from the previous step, create a user within ***Admin > Account > Account User Management*** with Edit, **Read and Analyze permissions**.
-3. **Enable Google Analytics API:** In the Cloud Console, ***APIs & Services > Library***, search for **Google Analytics API,** not the Google Analytics Reporting API. 
-4. **Create a Google Cloud Storage (GCS) bucket:** In the Cloud Console, ***Storage > Browser > Create Bucket***. Save the bucket name, referred to as **<GCS_BUCKET_NAME>** ahead.
+3. **Enable Google Analytics API:** In the Cloud Console, ***APIs & Services > Library***, search for **Google Analytics API,** not the Google Analytics Reporting API.
 
 ## Setup
 ### A. BigQueryML models using Cloud Functions/Cloud Scheduler
 
-1. **Load the model in GCS:** Open a Cloud Shell. Replace **<GCS_BUCKET_NAME>** with the actual GCS bucket name and execute the following commands - 
+1. **Setup cloud function:** To create the cloud function, open a Cloud Shell and copy the following commands and follow the prompts. Assign a unique function name in the code below -
     ``` 
-    GCS_BUCKET="gs://<GCS_BUCKET_NAME>"
-    git clone https://github.com/google/modem
-    pushd modem/bqml/cloud_function
-    zip -r bqml_cf.zip *
-    gsutil cp bqml_cf.zip $GCS_BUCKET
-    popd
-    rm -rf modem
-    ```
-2. **Create the cloud function:** In the Cloud console, go to **Cloud Functions > Create** with the following parameters - 
-    * **Memory allocated:** 2 GB
-    * Uncheck **Allow unauthenticated invocations**
-    * **Runtime:** Python 3.7
-    * **Cloud Storage location:** <GCS_BUCKET_NAME>/bqml_cf.zip
-    * **Function to execute:** main
-    * (Click the ***'Environment variables, networking, timeouts and more'*** dropdown) **Timeout:** 540 (seconds)
-    * (After successfully deploying the Cloud Function, check the security settings once again) In the **Cloud Functions** overview screen, select the function and check the Permissions tab on the right of the screen. **If it includes Cloud Function Invoker, please delete the allUsers member.** It is important to ensure authenticated access to the function. 
-
-3. **Copy the service key credentials into svc_key.json file:** Open the Cloud Function and update the svc_key.json file with the details from the downloaded service key file (check Prerequisites - Step 2). 
-
-4. **Edit the params.py file:** with the correct Google Analytics account id, property id, and dataset id. Also, update the query parameter with the BigQueryML predict query. 
-
-5. **Schedule the function using the Cloud Scheduler:** You can either use the Cloud Console (Cloud Scheduler > Create Job) or use the Cloud Shell with the following parameters -
-    * **JOBNAME:** Any name you like, e.g. ***"schedule_model_upload"***
-    * **SCHEDULE:** Specify the schedule in a cron-tab format e.g. ***"* * * * *"*** for each minute
-    * **TIMEZONE:** Choose a time-zone like ***"America/Detroit"***
-    * **FUNCTION_URL:** The URL can be found ***within the Cloud Function > Trigger.*** It has the format ***"https://<PROJECT_ID>.cloudfunctions.net/<FUNCTION_NAME>"***
-    * **SERVICE_ACCOUNT_EMAIL:** Service account email of the form ***"<SERVICE_ACCOUNT_NAME>@<PROJECT_ID>.iam.gserviceaccount.com"*** 
-    
-    ```
-    JOBNAME=""
-    SCHEDULE=""
-    TIMEZONE=""
-    FUNCTION_URL=""
-    SERVICE_ACCOUNT_EMAIL=""
-    gcloud alpha scheduler jobs create http $JOB_NAME  --schedule=$SCHDULE --uri=$FUNCTION_URL --time-zone=$TIMEZONE --oidc-service-account-email=$SERVICE_ACCOUNT_EMAIL
+    FUNCTION_NAME="<FUNCTION_NAME>"
+    git clone https://github.com/google/modem.git
+    cd modem/bqml/cloud_function
+    gcloud functions deploy $FUNCTION_NAME --runtime python37 --memory 2GB --timeout 540s --trigger-http --entry-point trigger_workflow
+    rm -rf ../../../modem
     ```
     
+2. **Copy the service key credentials into svc_key.json file:** Edit the created Cloud Function in the UI and update the svc_key.json file with the details from the downloaded service key file (check Prerequisites - Step 2).
 
+3. **Edit the params.py file:** with the correct Google Analytics account id, property id, and dataset id. Also, update the query parameter with the BigQueryML predict query.
 
+4. (OPTIONAL) **Setup logging for the workflow in BigQuery:** Set up a **BigQuery table with the schema** - time TIMESTAMP, status STRING, error STRING. In params.py, set **ENABLE_BQ_LOGGING = True, GCP_PROJECT_NAME, BQ_DATASET_NAME, BQ_TABLE_NAME**.
 
+5. (OPTIONAL) **Setup email alerts for workflow failures:**  **Setup Sendgrid API** by creating a free account and downloading an **API Key** in the Settings section of the SendGrid UI. More instructions [here](https://sendgrid.com/docs/for-developers/sending-email/authentication/). In params.py, update **ENABLE_SENDGRID_EMAIL_REPORTING = True, SENDGRID_API_KEY and TO_EMAIL**. If desired, update the other relevant email setup params, such FROM_EMAIL, SUBJECT & HTML_CONTENT.
 
+6. **Schedule the function using the Cloud Scheduler:** You can either use the Cloud Console (Cloud Scheduler > Create Job) or use the Cloud Shell with the required parameters in **scheduler.sh**.

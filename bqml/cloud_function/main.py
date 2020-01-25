@@ -69,9 +69,6 @@ def authorize_ga_api():
 
 def read_from_bq():
   """Reads the prediction query from Bigquery using BQML.
-
-  Args:
-    bq_client: The BigQuery client object.
   """
   bq_client = bigquery.Client()
   query_job = bq_client.query(BQML_PREDICT_QUERY)
@@ -130,7 +127,6 @@ def write_to_bq_logs(status, message):
   """Write to BQ Logs.
 
   Args:
-    bq_client: The BigQuery client object
     status: status of the workflow run - SUCCESS or ERROR
     message: Error message, if there's an error
   """

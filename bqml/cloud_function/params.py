@@ -38,7 +38,7 @@ ENABLE_SENDGRID_EMAIL_REPORTING = False
 
 
 # (OPTIONAL) Workflow Logging - BQ details, if enabled
-GCP_PROJECT_NAME = ""
+GCP_PROJECT_ID = ""
 BQ_DATASET_NAME = ""
 BQ_TABLE_NAME = ""
 

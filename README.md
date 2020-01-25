@@ -23,7 +23,7 @@ MoDeM hopes to provide the **last-mile engineering infrastructure** that enables
 
 1. **Setup cloud function:** To create the cloud function, open a Cloud Shell and copy the following commands. Replace <GCP_PROJECT_ID> with GCP project ID & <FUNCTION_NAME> with a unique function name (don't use underscores). 
     ``` 
-    GCP_PROJECT_ID = "<GCP_PROJECT_ID>" && FUNCTION_NAME="<FUNCTION_NAME>"
+    GCP_PROJECT_ID="<GCP_PROJECT_ID>" && FUNCTION_NAME="<FUNCTION_NAME>"
     ```
     ```
     git clone https://github.com/google/modem.git && cd modem/bqml/cloud_function

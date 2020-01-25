@@ -46,11 +46,12 @@ MoDeM hopes to provide the **last-mile engineering infrastructure** that enables
 5. (OPTIONAL) **Setup email alerts for workflow failures:**  In params.py, update **ENABLE_SENDGRID_EMAIL_REPORTING = True, SENDGRID_API_KEY and TO_EMAIL**. If desired, update the other relevant email setup params, such FROM_EMAIL, SUBJECT & HTML_CONTENT.
 
 6. **Schedule the function using the Cloud Scheduler:** You can either use the Cloud Console (Cloud Scheduler > Create Job) or use the Cloud Shell with the required parameters in **scheduler.sh** or use the script below -
-    * <JOB_NAME>: Any name you like, e.g. "schedule_model_upload"
-    * <SCHEDULE>: Specify the schedule in a cron-tab format e.g. "45 23 * * *" to run job every day at 11:45 pm
-    * <TIMEZONE>: Specify timezone e.g. "EST", "PST", "CST" etc. for US time zones
-    * <FUNCTION_URL>: The URL can be found within the 'Cloud Function > Trigger' It has the format "https://<PROJECT_ID>.cloudfunctions.net/<FUNCTION_NAME>"
-    * <SERVICE_ACCOUNT_EMAIL>: Service account email of the form "<SERVICE_ACCOUNT_NAME>@<PROJECT_ID>.iam.gserviceaccount.com"
+    *  JOB_NAME: Any name you like, e.g. "schedule_model_upload"
+    *  SCHEDULE: Specify the schedule in a cron-tab format e.g. "45 23 * * *" to run job every day at 11:45 pm
+    *  TIMEZONE: Specify timezone e.g. "EST", "PST", "CST" etc. for US time zones
+    *  FUNCTION_URL: The URL can be found within the 'Cloud Function > Trigger' It has the format "https://<PROJECT_ID>.cloudfunctions.net/<FUNCTION_NAME>"
+    *  SERVICE_ACCOUNT_EMAIL: Service account email of the form "<SERVICE_ACCOUNT_NAME>@<PROJECT_ID>.iam.gserviceaccount.com"
+    
    ```
    JOB_NAME="<JOB_NAME>" && SCHEDULE="<SCHEDULE>" && TIMEZONE="<TIMEZONE>"
    FUNCTION_URL="<FUNCTION_URL>" && SERVICE_ACCOUNT_EMAIL="<SERVICE_ACCOUNT_EMAIL>" 

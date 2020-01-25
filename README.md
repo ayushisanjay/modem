@@ -16,13 +16,13 @@ MoDeM hopes to provide the **last-mile engineering infrastructure** that enables
 ## Prerequisites
 1. **Create service account key:** In the Cloud Console, ***IAM & Admin > Service Accounts > Create Service Account***. Fill out the necessary details, such as service account name, service account email, **permissions (BigQuery Job User)**, creating & downloading the key file. Please store the service account email & service key file safely. 
 2. **Add the service account email as a user to Google Analytics:** Using the service account email generated from the previous step, create a user within ***Admin > Account > Account User Management*** with Edit, **Read and Analyze permissions**.
-3. **Enable Google Analytics API:** In the Cloud Console, ***APIs & Services > Library***, search for **Google Analytics API,** not the Google Analytics Reporting API.
+3. **Enable Google Analytics API:** In the Cloud Console, ***APIs & Services > Library***, search for **Google Analytics API,** not the Google Analytics Reporting API. 
 4. (OPTIONAL) **Setup email API for failure alerts:** Setup Sendgrid API by creating a free account and downloading an **API Key** in the Settings section of the [SendGrid UI](https://sendgrid.com/docs/for-developers/sending-email/authentication/).
 
 ## Setup
 ### A. BigQueryML models using Cloud Functions/Cloud Scheduler
 
-1. **Setup cloud function:** To create the cloud function, open a Cloud Shell and copy the following commands. Replace <GCP_PROJECT_ID> with GCP project ID & <FUNCTION_NAME> with a unique function name (don't use underscores). 
+1. **Setup cloud function:** To create the cloud function, open a Cloud Shell and copy the following commands. Replace <GCP_PROJECT_ID> with GCP project ID which will run the BigQuery ML predict query & <FUNCTION_NAME> with a unique function name (don't use underscores). 
     ``` 
     GCP_PROJECT_ID="<GCP_PROJECT_ID>" && FUNCTION_NAME="<FUNCTION_NAME>"
     ```

@@ -27,7 +27,7 @@ MoDeM hopes to provide the **last-mile engineering infrastructure** that enables
     GCP_PROJECT_ID="<GCP_PROJECT_ID>" && FUNCTION_NAME="<FUNCTION_NAME>"
     ```
     ```
-    git clone https://github.com/google/modem.git && cd modem/bqml/cloud_function
+    rm -rf modem && git clone https://github.com/google/modem.git && cd modem/bqml/cloud_function
     gcloud functions deploy $FUNCTION_NAME --runtime python37 --memory 2GB --timeout 540s --trigger-http --entry-point trigger_workflow --project $GCP_PROJECT_ID && cd ../../../ && rm -rf modem
     ```
     

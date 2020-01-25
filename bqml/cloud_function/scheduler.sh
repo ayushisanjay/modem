@@ -27,7 +27,7 @@
 #    e. SERVICE_ACCOUNT_EMAIL: Service account email of the form "<SERVICE_ACCOUNT_NAME>@<PROJECT_ID>.iam.gserviceaccount.com"
 
 
-JOBNAME=""
+JOB_NAME=""
 SCHEDULE=""
 TIMEZONE=""
 FUNCTION_URL=""

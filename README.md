@@ -51,9 +51,12 @@ MoDeM hopes to provide the **last-mile engineering infrastructure** that enables
     * <TIMEZONE>: Specify timezone e.g. "EST", "PST", "CST" etc. for US time zones
     * <FUNCTION_URL>: The URL can be found within the 'Cloud Function > Trigger' It has the format "https://<PROJECT_ID>.cloudfunctions.net/<FUNCTION_NAME>"
     * <SERVICE_ACCOUNT_EMAIL>: Service account email of the form "<SERVICE_ACCOUNT_NAME>@<PROJECT_ID>.iam.gserviceaccount.com"
-  ```
-  ```
-  ```
-  ```
+   ```
+   JOB_NAME="<JOB_NAME>" && SCHEDULE="<SCHEDULE>" && TIMEZONE="<TIMEZONE>"
+   FUNCTION_URL="<FUNCTION_URL>" && SERVICE_ACCOUNT_EMAIL="<SERVICE_ACCOUNT_EMAIL>" 
+   ```
+   ```
+   gcloud alpha scheduler jobs create http $JOB_NAME  --schedule="$SCHEDULE" --uri=$FUNCTION_URL --time-zone=$TIMEZONE --oidc-service-account-email=$SERVICE_ACCOUNT_EMAIL 
+   ```
     
 

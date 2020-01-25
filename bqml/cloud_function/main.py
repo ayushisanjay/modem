@@ -59,15 +59,6 @@ GA_API_VERSION = "v3"
 CLOUD_SCOPES = ["https://www.googleapis.com/auth/cloud-platform"]
 
 
-def authorize_bq_client():
-  cloud_credentials = service_account.Credentials.from_service_account_file(
-      SERVICE_ACCOUNT_FILE,
-      scopes=CLOUD_SCOPES)
-  client = bigquery.Client(credentials=cloud_credentials,
-                           project=cloud_credentials.project_id)
-  return client
-
-
 def authorize_ga_api():
   ga_credentials = ServiceAccountCredentials.from_json_keyfile_name(
       SERVICE_ACCOUNT_FILE, GA_SCOPES)
@@ -76,12 +67,13 @@ def authorize_ga_api():
   return ga_api
 
 
-def read_from_bq(bq_client):
+def read_from_bq():
   """Reads the prediction query from Bigquery using BQML.
 
   Args:
     bq_client: The BigQuery client object.
   """
+  bq_client = bigquery.Client()
   query_job = bq_client.query(BQML_PREDICT_QUERY)
   results = query_job.result()
   dataframe = results.to_dataframe()
@@ -134,7 +126,7 @@ def delete_ga_prev_uploads(ga_api):
 # ,then 10 seconds afterwards - for 5 attempts
 @retry(stop_max_attempt_number=5,
        wait_exponential_multiplier=1000, wait_exponential_max=10000)
-def write_to_bq_logs(bq_client, status, message):
+def write_to_bq_logs(status, message):
   """Write to BQ Logs.
 
   Args:
@@ -142,6 +134,7 @@ def write_to_bq_logs(bq_client, status, message):
     status: status of the workflow run - SUCCESS or ERROR
     message: Error message, if there's an error
   """
+  bq_client = bigquery.Client()
   timestamp_utc = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
   bq_insert_template_query = """INSERT INTO `{0}` VALUES ("{1}","{2}","{3}")"""
   write_logs_query = bq_insert_template_query.format(LOGS_BQ_TABLE,
@@ -184,17 +177,16 @@ def trigger_workflow(request):
     workflow_status: Success or Error.
   """
   try:
-    bq_client = authorize_bq_client()
-    read_from_bq(bq_client)
+    read_from_bq()
     ga_api = authorize_ga_api()
     write_to_ga(ga_api)
     delete_ga_prev_uploads(ga_api)
     if ENABLED_LOGGING:
-      write_to_bq_logs(bq_client=bq_client, status="SUCCESS", message="")
+      write_to_bq_logs(status="SUCCESS", message="")
     return "Success"
   except Exception as e:
     if ENABLED_LOGGING:
-      write_to_bq_logs(bq_client=bq_client, status="ERROR", message=str(e))
+      write_to_bq_logs(status="ERROR", message=str(e))
     if ENABLED_EMAIL:
       send_email(error_message=str(e))
     return "Error"

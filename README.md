@@ -17,6 +17,7 @@ MoDeM hopes to provide the **last-mile engineering infrastructure** that enables
 1. **Create service account key:** In the Cloud Console, ***IAM & Admin > Service Accounts > Create Service Account***. Fill out the necessary details, such as service account name, service account email, **permissions (BigQuery Job User)**, creating & downloading the key file. Please store the service account email & service key file safely. 
 2. **Add the service account email as a user to Google Analytics:** Using the service account email generated from the previous step, create a user within ***Admin > Account > Account User Management*** with Edit, **Read and Analyze permissions**.
 3. **Enable Google Analytics API:** In the Cloud Console, ***APIs & Services > Library***, search for **Google Analytics API,** not the Google Analytics Reporting API.
+4. (OPTIONAL) **Enable email API for failure alerts:** Setup Sendgrid API by creating a free account and downloading an **API Key** in the Settings section of the [SendGrid UI](https://sendgrid.com/docs/for-developers/sending-email/authentication/).
 
 ## Setup
 ### A. BigQueryML models using Cloud Functions/Cloud Scheduler
@@ -36,6 +37,6 @@ MoDeM hopes to provide the **last-mile engineering infrastructure** that enables
 
 4. (OPTIONAL) **Setup logging for the workflow in BigQuery:** Set up a **BigQuery table with the schema** - time TIMESTAMP, status STRING, error STRING. In params.py, set **ENABLE_BQ_LOGGING = True, GCP_PROJECT_NAME, BQ_DATASET_NAME, BQ_TABLE_NAME**.
 
-5. (OPTIONAL) **Setup email alerts for workflow failures:**  **Setup Sendgrid API** by creating a free account and downloading an **API Key** in the Settings section of the SendGrid UI. More instructions [here](https://sendgrid.com/docs/for-developers/sending-email/authentication/). In params.py, update **ENABLE_SENDGRID_EMAIL_REPORTING = True, SENDGRID_API_KEY and TO_EMAIL**. If desired, update the other relevant email setup params, such FROM_EMAIL, SUBJECT & HTML_CONTENT.
+5. (OPTIONAL) **Setup email alerts for workflow failures:**  In params.py, update **ENABLE_SENDGRID_EMAIL_REPORTING = True, SENDGRID_API_KEY and TO_EMAIL**. If desired, update the other relevant email setup params, such FROM_EMAIL, SUBJECT & HTML_CONTENT.
 
 6. **Schedule the function using the Cloud Scheduler:** You can either use the Cloud Console (Cloud Scheduler > Create Job) or use the Cloud Shell with the required parameters in **scheduler.sh**.

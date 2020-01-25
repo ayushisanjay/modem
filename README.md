@@ -24,11 +24,13 @@ MoDeM hopes to provide the **last-mile engineering infrastructure** that enables
 
 1. **Setup cloud function:** To create the cloud function, open a Cloud Shell and copy the following commands. Replace <GCP_PROJECT_ID> with GCP project ID which will run the BigQuery ML predict query & <FUNCTION_NAME> with a unique function name (don't use underscores). 
     ``` 
-      GCP_PROJECT_ID="<GCP_PROJECT_ID>" && FUNCTION_NAME="<FUNCTION_NAME>"
+    GCP_PROJECT_ID="<GCP_PROJECT_ID>" && FUNCTION_NAME="<FUNCTION_NAME>"
     ```
     ```
-      rm -rf modem && git clone https://github.com/google/modem.git && cd modem/bqml/cloud_function
-      gcloud functions deploy $FUNCTION_NAME --runtime python37 --memory 2GB --timeout 540s --trigger-http --entry-point trigger_workflow --project $GCP_PROJECT_ID && cd ../../../ && rm -rf modem
+    rm -rf modem && git clone https://github.com/google/modem.git && cd modem/bqml/cloud_function
+    gcloud functions deploy $FUNCTION_NAME --runtime python37 --memory 2GB --timeout 540s \ 
+        --trigger-http --entry-point trigger_workflow --project $GCP_PROJECT_ID \ 
+        && cd ../../../ && rm -rf modem
     ```
     
 2. **Copy the service key credentials into svc_key.json file:** Edit the created Cloud Function in the UI and update the svc_key.json file with the details from the downloaded service key file (check Prerequisites - Step 2).

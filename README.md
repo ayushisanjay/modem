@@ -35,15 +35,14 @@ MoDeM hopes to provide the **last-mile engineering infrastructure** that enables
 
 3. **Edit the params.py file:** with the correct Google Analytics account id, property id, and dataset id. Also, update the query parameter with the BigQueryML predict query.
 
-4. (OPTIONAL) **Setup logging for the workflow in BigQuery:** Set up a **BigQuery table with the schema** - time TIMESTAMP, status STRING, error STRING. You can also choose to use the script below in the Cloud shell to create a dataset called 'monitoring' with table called 'logs'.  
+4. (OPTIONAL) **Setup logging for the workflow in BigQuery:** Set up a **BigQuery table with the schema** - time TIMESTAMP, status STRING, error STRING. In params.py, set **ENABLE_BQ_LOGGING = True, GCP_PROJECT_NAME, BQ_DATASET_NAME, BQ_TABLE_NAME**.
+   You can also choose to use the script below in the Cloud shell to create logging table. Replace <GCP_PROJECT_ID>, <DATASET_NAME> & <TABLE_NAME>.
    ```
-   GCP_PROJECT_ID="<GCP_PROJECT_ID>" && DATASET_NAME="monitoring" && TABLE_NAME="logs"
+   GCP_PROJECT_ID="<GCP_PROJECT_ID>" && DATASET_NAME="<DATASET_NAME>" && TABLE_NAME="<TABLE_NAME>"
    ```
-   Copy the entire command: 
    ```
    bq mk --dataset $GCP_PROJECT_ID:$DATASET_NAME && bq mk --table $GCP_PROJECT_ID:$DATASET_NAME.$TABLE_NAME time:TIMESTAMP,status:STRING,error:STRING
    ```
-    In params.py, set **ENABLE_BQ_LOGGING = True, GCP_PROJECT_NAME, BQ_DATASET_NAME, BQ_TABLE_NAME**.
 
 5. (OPTIONAL) **Setup email alerts for workflow failures:**  In params.py, update **ENABLE_SENDGRID_EMAIL_REPORTING = True, SENDGRID_API_KEY and TO_EMAIL**. If desired, update the other relevant email setup params, such FROM_EMAIL, SUBJECT & HTML_CONTENT.
 

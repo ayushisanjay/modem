@@ -29,7 +29,7 @@ MoDeM hopes to provide the **last-mile engineering infrastructure** that enables
     
 2. (OPTIONAL) **Setup logging for the workflow in BigQuery:** Set up a **BigQuery table with the schema** - time TIMESTAMP, status STRING, error STRING. To create a dataset with name 'workflow' and table name 'logs', please run the command below-
     ```
-    DATASET_NAME="workflow" && TABLE_NAME="logs" && bq mk --dataset $DATASET_NAME && bq mk --table $GCP_PROJECT_ID:$DATASET_NAME.$TABLE_NAME time:TIMESTAMP,status:STRING,error:STRING
+    DATASET_NAME="workflow" && TABLE_NAME="logs" && bq mk --dataset $DATASET_NAME && bq mk --table $DATASET_NAME.$TABLE_NAME time:TIMESTAMP,status:STRING,error:STRING
     ```
 3. **Edit 'svc_key.json' file:** Edit the created Cloud Function in the UI and update the svc_key.json file with the details from the downloaded service key file (check Prerequisites - Step 2).
 

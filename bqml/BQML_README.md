@@ -1,6 +1,6 @@
 # Deploying BQML models
 
-## Workflow Setup
+## Workflow Setup Prerequisities
 1. **Create service account key:** In the Cloud Console, ***IAM & Admin > Service Accounts > Create Service Account***. Fill out the necessary details, such as service account name, service account email, **permissions (BigQuery Job User)**, creating & downloading the key file. Please store the service account email & service key file safely. 
 2. **Enable Google Analytics API:** In the Cloud Console, ***APIs & Services > Library***, search for **Google Analytics API,** not the Google Analytics Reporting API. 
 3. (OPTIONAL, if using Cloud Functions) **Setup email API for failure alerts:** Setup Sendgrid API by creating a free account and downloading an **API Key** in the Settings section of the [SendGrid UI](https://sendgrid.com/docs/for-developers/sending-email/authentication/).
@@ -9,6 +9,7 @@
 1. **Add the service account email as a user to Google Analytics:** Using the service account email generated from the previous step, create a user within ***Admin > Account > Account User Management*** with Edit, **Read and Analyze permissions**.
 
 ## Test Data Setup
+If you wish to play around with the workflow, please use the sample data included. 
 
 ## Setup
 ### A. BigQueryML models using Cloud Functions/Cloud Scheduler

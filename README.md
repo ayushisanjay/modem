@@ -22,7 +22,7 @@ MoDeM hopes to provide the **last-mile engineering infrastructure** that enables
 ## Setup
 ### A. BigQueryML models using Cloud Functions/Cloud Scheduler
 
-1. **Setup cloud function:** To create the cloud function, open a Cloud Shell and copy the following commands. Replace <GCP_PROJECT_ID> with GCP project ID which will run the BigQuery ML predict query & <FUNCTION_NAME> with a unique function name (don't use underscores/spaces). Also, please don't use spaces between parameter & value. 
+1. **Setup cloud function:** To create the cloud function, open a Cloud Shell and copy the following command. Follow the instructions that appear on the screen. 
     ```
     rm -rf modem && git clone https://github.com/google/modem.git && cd modem/bqml/cloud_function && sh deploy.sh
     ```

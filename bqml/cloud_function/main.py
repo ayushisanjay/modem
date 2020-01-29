@@ -37,7 +37,7 @@ BQML_PREDICT_QUERY = params.BQML_PREDICT_QUERY
 ENABLED_LOGGING = params.ENABLE_BQ_LOGGING
 ENABLED_EMAIL = params.ENABLE_SENDGRID_EMAIL_REPORTING
 
-LOGS_BQ_TABLE = "{0}.{1}.{2}".format(params.GCP_PROJECT_NAME,
+LOGS_BQ_TABLE = "{0}.{1}.{2}".format(params.GCP_PROJECT_ID,
                                      params.BQ_DATASET_NAME,
                                      params.BQ_TABLE_NAME)
 

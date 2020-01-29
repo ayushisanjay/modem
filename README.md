@@ -32,6 +32,9 @@ MoDeM hopes to provide the **last-mile engineering infrastructure** that enables
     ``` (WIP)
     rm -rf modem && git clone https://github.com/google/modem.git && cd modem/bqml/cloud_function && sh deploy.sh
     ```
+    ```
+    DATASET_NAME="workflow && TABLE_NAME="logs" && bq mk --dataset $GCP_PROJECT_ID:$DATASET_NAME && bq mk --table $GCP_PROJECT_ID:$DATASET_NAME.$TABLE_NAME time:TIMESTAMP,status:STRING,error:STRING
+    ```
 2. **Copy the service key credentials into svc_key.json file:** Edit the created Cloud Function in the UI and update the svc_key.json file with the details from the downloaded service key file (check Prerequisites - Step 2).
 
 3. **Edit the params.py file:** with the correct Google Analytics account id, property id, and dataset id. Also, update the query parameter with the BigQueryML predict query.

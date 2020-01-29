@@ -27,6 +27,10 @@
 #    e. SERVICE_ACCOUNT_EMAIL: Service account email of the form "<SERVICE_ACCOUNT_NAME>@<PROJECT_ID>.iam.gserviceaccount.com"
 
 
-JOB_NAME="" && SCHEDULE="" && TIMEZONE="" && FUNCTION_URL="" && SERVICE_ACCOUNT_EMAIL=""
+JOB_NAME=""
+SCHEDULE=""
+TIMEZONE=""
+FUNCTION_URL=""
+SERVICE_ACCOUNT_EMAIL=""
 gcloud alpha scheduler jobs create http $JOB_NAME  --schedule="$SCHEDULE" --uri=$FUNCTION_URL --time-zone=$TIMEZONE --oidc-service-account-email=$SERVICE_ACCOUNT_EMAIL
 

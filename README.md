@@ -13,11 +13,14 @@ MoDeM hopes to provide the **last-mile engineering infrastructure** that enables
 2. **Python ML models** built with scikit-learn, XGBoost & Tensorflow (Google AI Platform) using Cloud Functions/Cloud Scheduler and Cloud Composer.
 3. **AutoML models** using Cloud Composer.
 
-## Prerequisites
+## Workflow Setup
 1. **Create service account key:** In the Cloud Console, ***IAM & Admin > Service Accounts > Create Service Account***. Fill out the necessary details, such as service account name, service account email, **permissions (BigQuery Job User)**, creating & downloading the key file. Please store the service account email & service key file safely. 
-2. **Add the service account email as a user to Google Analytics:** Using the service account email generated from the previous step, create a user within ***Admin > Account > Account User Management*** with Edit, **Read and Analyze permissions**.
-3. **Enable Google Analytics API:** In the Cloud Console, ***APIs & Services > Library***, search for **Google Analytics API,** not the Google Analytics Reporting API. 
-4. (OPTIONAL, if using Cloud Functions) **Setup email API for failure alerts:** Setup Sendgrid API by creating a free account and downloading an **API Key** in the Settings section of the [SendGrid UI](https://sendgrid.com/docs/for-developers/sending-email/authentication/).
+2. **Enable Google Analytics API:** In the Cloud Console, ***APIs & Services > Library***, search for **Google Analytics API,** not the Google Analytics Reporting API. 
+3. (OPTIONAL, if using Cloud Functions) **Setup email API for failure alerts:** Setup Sendgrid API by creating a free account and downloading an **API Key** in the Settings section of the [SendGrid UI](https://sendgrid.com/docs/for-developers/sending-email/authentication/).
+
+## Account Setup
+1. **Add the service account email as a user to Google Analytics:** Using the service account email generated from the previous step, create a user within ***Admin > Account > Account User Management*** with Edit, **Read and Analyze permissions**.
+
 
 ## Setup
 ### A. BigQueryML models using Cloud Functions/Cloud Scheduler

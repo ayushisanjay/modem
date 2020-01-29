@@ -27,7 +27,7 @@ MoDeM hopes to provide the **last-mile engineering infrastructure** that enables
     rm -rf modem && git clone https://github.com/google/modem.git && cd modem/bqml/cloud_function && sh deploy.sh
     ```
     
-2. (OPTIONAL) **Setup logging for the workflow in BigQuery:** Set up a **BigQuery table with the schema** - time TIMESTAMP, status STRING, error STRING. To create a dataset with name 'workflow' and table name 'logs', please run the command below-
+2. ***(OPTIONAL)* Setup logging for the workflow in BigQuery:** Set up a **BigQuery table with the schema** - *time TIMESTAMP, status STRING, error STRING*. To create a dataset with name 'workflow' and table name 'logs', please run the command below-
     ```
     DATASET_NAME="workflow" && TABLE_NAME="logs" && bq mk --dataset $DATASET_NAME && bq mk --table $DATASET_NAME.$TABLE_NAME time:TIMESTAMP,status:STRING,error:STRING
     ```

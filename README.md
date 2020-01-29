@@ -23,46 +23,19 @@ MoDeM hopes to provide the **last-mile engineering infrastructure** that enables
 ### A. BigQueryML models using Cloud Functions/Cloud Scheduler
 
 1. **Setup cloud function:** To create the cloud function, open a Cloud Shell and copy the following commands. Replace <GCP_PROJECT_ID> with GCP project ID which will run the BigQuery ML predict query & <FUNCTION_NAME> with a unique function name (don't use underscores/spaces). Also, please don't use spaces between parameter & value. 
-    ``` 
-    GCP_PROJECT_ID="<GCP_PROJECT_ID>" && FUNCTION_NAME="<FUNCTION_NAME>"
     ```
-    ```
-    rm -rf modem && git clone https://github.com/google/modem.git && cd modem/bqml/cloud_function && gcloud functions deploy $FUNCTION_NAME --runtime python37 --memory 2GB --timeout 540s --trigger-http --entry-point trigger_workflow --project $GCP_PROJECT_ID && cd ../../../ && rm -rf modem
-    ```
-    ``` (WIP)
     rm -rf modem && git clone https://github.com/google/modem.git && cd modem/bqml/cloud_function && sh deploy.sh
     ```
+    
+2. (OPTIONAL) **Setup logging for the workflow in BigQuery:** Set up a **BigQuery table with the schema** - time TIMESTAMP, status STRING, error STRING. To create a dataset with name 'workflow' and table name 'logs', please run the command below-
     ```
     DATASET_NAME="workflow" && TABLE_NAME="logs" && bq mk --dataset $GCP_PROJECT_ID:$DATASET_NAME && bq mk --table $GCP_PROJECT_ID:$DATASET_NAME.$TABLE_NAME time:TIMESTAMP,status:STRING,error:STRING
     ```
-2. **Copy the service key credentials into svc_key.json file:** Edit the created Cloud Function in the UI and update the svc_key.json file with the details from the downloaded service key file (check Prerequisites - Step 2).
+3. **Edit 'svc_key.json' file:** Edit the created Cloud Function in the UI and update the svc_key.json file with the details from the downloaded service key file (check Prerequisites - Step 2).
 
-3. **Edit the params.py file:** with the correct Google Analytics account id, property id, and dataset id. Also, update the query parameter with the BigQueryML predict query.
+3. **Edit 'params.py' file:** with the correct Google Analytics account id, property id, and dataset id. Also, update the query parameter with the BigQueryML predict query. *Optionally*, if you choose to enable monitoring, set **ENABLE_BQ_LOGGING = True, GCP_PROJECT_ID, BQ_DATASET_NAME, BQ_TABLE_NAME**. Also, if you choose to receive email alerts for failures, set **ENABLE_SENDGRID_EMAIL_REPORTING = True, SENDGRID_API_KEY and TO_EMAIL**. Other params, such FROM_EMAIL, SUBJECT & HTML_CONTENT, work with default values but feel free to edit.
 
-4. (OPTIONAL) **Setup logging for the workflow in BigQuery:** Set up a **BigQuery table with the schema** - time TIMESTAMP, status STRING, error STRING. In params.py, set **ENABLE_BQ_LOGGING = True, GCP_PROJECT_ID, BQ_DATASET_NAME, BQ_TABLE_NAME**.
-   You can also choose to use the script below in the Cloud shell to create logging table. Replace <GCP_PROJECT_ID>, <DATASET_NAME> & <TABLE_NAME>.
-   ```
-   GCP_PROJECT_ID="<GCP_PROJECT_ID>" && DATASET_NAME="<DATASET_NAME>" && TABLE_NAME="<TABLE_NAME>"
-   ```
-   ```
-   bq mk --dataset $GCP_PROJECT_ID:$DATASET_NAME && bq mk --table $GCP_PROJECT_ID:$DATASET_NAME.$TABLE_NAME time:TIMESTAMP,status:STRING,error:STRING
-   ```
+4. **Edit 'scheduler.sh' file:** with JOB_NAME, SCHEDULE, TIMEZONE, FUNCTION_URL & SERVICE_ACCOUNT_EMAIL as specified and "Deploy" the function. 
 
-5. (OPTIONAL) **Setup email alerts for workflow failures:**  In params.py, update **ENABLE_SENDGRID_EMAIL_REPORTING = True, SENDGRID_API_KEY and TO_EMAIL**. If desired, update the other relevant email setup params, such FROM_EMAIL, SUBJECT & HTML_CONTENT.
-
-6. **Schedule the function using the Cloud Scheduler:** You can either use the Cloud Console (Cloud Scheduler > Create Job) or use the Cloud Shell with the required parameters in **scheduler.sh** or use the script below -
-    *  JOB_NAME: Any name you like, e.g. "schedule_model_upload"
-    *  SCHEDULE: Specify the schedule in a cron-tab format e.g. "45 23 * * *" to run job every day at 11:45 pm
-    *  TIMEZONE: Specify timezone e.g. "EST", "PST", "CST" etc. for US time zones
-    *  FUNCTION_URL: The URL can be found within the 'Cloud Function > Trigger' It has the format "https://<PROJECT_ID>.cloudfunctions.net/<FUNCTION_NAME>"
-    *  SERVICE_ACCOUNT_EMAIL: Service account email of the form "<SERVICE_ACCOUNT_NAME>@<PROJECT_ID>.iam.gserviceaccount.com"
-    
-   ```
-   JOB_NAME="<JOB_NAME>" && SCHEDULE="<SCHEDULE>" && TIMEZONE="<TIMEZONE>"
-   FUNCTION_URL="<FUNCTION_URL>" && SERVICE_ACCOUNT_EMAIL="<SERVICE_ACCOUNT_EMAIL>" 
-   ```
-   ```
-   gcloud alpha scheduler jobs create http $JOB_NAME  --schedule="$SCHEDULE" --uri=$FUNCTION_URL --time-zone=$TIMEZONE --oidc-service-account-email=$SERVICE_ACCOUNT_EMAIL 
-   ```
-    
+5. **Schedule the function using the Cloud Scheduler:** You can either use the Cloud Console (Cloud Scheduler > Create Job) or use the Cloud Shell by copying the commands from the edited 'scheduler.sh' file (lines 30 - 35).
 

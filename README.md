@@ -33,7 +33,7 @@ MoDeM hopes to provide the **last-mile engineering infrastructure** that enables
     ```
 3. **Edit 'svc_key.json' file:** Edit the created Cloud Function in the UI and update the svc_key.json file with the details from the downloaded service key file (check Prerequisites - Step 2).
 
-3. **Edit 'params.py' file:** with the correct Google Analytics account id, property id, and dataset id. Also, update the query parameter with the BigQueryML predict query. *Optionally*, if you choose to enable monitoring, set **ENABLE_BQ_LOGGING = True, GCP_PROJECT_ID, BQ_DATASET_NAME, BQ_TABLE_NAME**. Also, if you choose to receive email alerts for failures, set **ENABLE_SENDGRID_EMAIL_REPORTING = True, SENDGRID_API_KEY and TO_EMAIL**. Other params, such FROM_EMAIL, SUBJECT & HTML_CONTENT, work with default values but feel free to edit.
+3. **Edit 'params.py' file:** with the correct Google Analytics account id, property id, and dataset id. Also, update the query parameter with the BigQueryML predict query. ***Optionally***, if you choose to enable monitoring, set **ENABLE_BQ_LOGGING = True, GCP_PROJECT_ID, BQ_DATASET_NAME, BQ_TABLE_NAME**. Also, if you choose to receive email alerts for failures, set **ENABLE_SENDGRID_EMAIL_REPORTING = True, SENDGRID_API_KEY and TO_EMAIL**. Other params, such FROM_EMAIL, SUBJECT & HTML_CONTENT, work with default values but feel free to edit.
 
 4. **Edit 'scheduler.sh' file:** with JOB_NAME, SCHEDULE, TIMEZONE, FUNCTION_URL & SERVICE_ACCOUNT_EMAIL as specified and "Deploy" the function. 
 

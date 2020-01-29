@@ -15,4 +15,4 @@ MoDeM hopes to provide the **last-mile engineering infrastructure** that enables
 
 ## Setup Instructions
 
-1.. BigQueryML models using Cloud Functions/Cloud Scheduler - click [here](https://github.com/google/modem/blob/master/bqml/BQML_README.md)
+1. BigQueryML models using Cloud Functions/Cloud Scheduler - click [here](https://github.com/google/modem/blob/master/bqml/BQML_README.md)

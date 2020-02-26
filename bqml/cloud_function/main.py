@@ -185,4 +185,4 @@ def trigger_workflow(request):
       write_to_bq_logs(status="ERROR", message=str(e))
     if ENABLED_EMAIL:
       send_email(error_message=str(e))
-    return "Error"
+    return "Error: "+str(e)

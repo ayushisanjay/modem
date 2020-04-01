@@ -19,12 +19,13 @@
 ###########################################################################
 #
 # Instructions -
-# 1. Edit the following params in the Cloud Functions UI. Don't insert spaces between param and value.
+# 1. Edit the following params in the Cloud Functions UI. Don't insert spaces between param and value (lines 31 - 35).
 #    a. JOBNAME: Any name you like, e.g. "schedule_model_upload"
 #    b. SCHEDULE: Specify the schedule in a cron-tab format e.g. "45 23 * * *" to run job every day at 11:45 pm
 #    c. TIMEZONE: Specify timezone e.g. "EST", "PST", "CST" etc. for US time zones
 #    d. FUNCTION_URL: The URL can be found within the 'Cloud Function > Trigger' It has the format "https://<PROJECT_ID>.cloudfunctions.net/<FUNCTION_NAME>"
 #    e. SERVICE_ACCOUNT_EMAIL: Service account email of the form "<SERVICE_ACCOUNT_NAME>@<PROJECT_ID>.iam.gserviceaccount.com"
+# 2. Once you've updated the params, copy/paste the params with values into the cloud shell.
 
 
 JOB_NAME=""
